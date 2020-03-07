@@ -1,19 +1,39 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-container>
+      <v-row>
+        <v-col cols="2">
+          <ConnectButton />
+        </v-col>
+        <v-col cols="2">
+          <PlayerNameInput />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="2">
+          <PlayerList />
+        </v-col>
+        <v-col>
+          <Map></Map>
+        </v-col>
+        <v-col cols="2"></v-col>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {
+  Map,
+  ConnectButton,
+  PlayerList,
+  PlayerNameInput
+} from "./components/index";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: { Map, ConnectButton, PlayerList, PlayerNameInput }
+};
 </script>
 
 <style>
