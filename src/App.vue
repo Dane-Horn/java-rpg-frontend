@@ -8,13 +8,16 @@
         <v-col cols="2">
           <PlayerNameInput />
         </v-col>
+        <v-col cols="2">
+          <TilesetSelect v-on:changed="updateTileset" />
+        </v-col>
       </v-row>
       <v-row>
         <v-col cols="2">
           <PlayerList />
         </v-col>
         <v-col>
-          <Map></Map>
+          <Map :tileset="tileset"></Map>
         </v-col>
         <v-col cols="2"></v-col>
       </v-row>
@@ -27,12 +30,29 @@ import {
   Map,
   ConnectButton,
   PlayerList,
-  PlayerNameInput
+  PlayerNameInput,
+  TilesetSelect
 } from "./components/index";
 
 export default {
   name: "App",
-  components: { Map, ConnectButton, PlayerList, PlayerNameInput }
+  components: {
+    Map,
+    ConnectButton,
+    PlayerList,
+    PlayerNameInput,
+    TilesetSelect
+  },
+  data() {
+    return {
+      tileset: "dungeon"
+    };
+  },
+  methods: {
+    updateTileset(event) {
+      this.tileset = event;
+    }
+  }
 };
 </script>
 

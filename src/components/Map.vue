@@ -6,7 +6,13 @@
 export default {
   name: "Map",
   props: {
+    tileset: String,
     size: Object
+  },
+  watch: {
+    tileset() {
+      this.loadTilemap();
+    }
   },
   data() {
     return {
@@ -20,8 +26,8 @@ export default {
     };
   },
   methods: {
-    loadTilemap(tileset) {
-      switch (tileset) {
+    loadTilemap() {
+      switch (this.$props.tileset) {
         case "retro":
           this.tilemap.src = require("../assets/tiles.png");
           this.tiles.player = { x: 2, y: 19 };
@@ -98,32 +104,41 @@ export default {
       );
     },
     handleMovement(key) {
+      console.log(key);
       let tempPos = { x: this.playerPos.x, y: this.playerPos.y };
       switch (key) {
+        case "8":
         case "w":
           tempPos.y--;
           break;
+        case "4":
         case "a":
           tempPos.x--;
           break;
+        case "2":
         case "s":
           tempPos.y++;
           break;
+        case "6":
         case "d":
           tempPos.x++;
           break;
+        case "7":
         case "q":
           tempPos.y--;
           tempPos.x--;
           break;
+        case "1":
         case "z":
           tempPos.y++;
           tempPos.x--;
           break;
+        case "3":
         case "c":
           tempPos.y++;
           tempPos.x++;
           break;
+        case "9":
         case "e":
           tempPos.y--;
           tempPos.x++;
@@ -150,7 +165,8 @@ export default {
     this.tilemap.onload = () => {
       if (this.map.length > 0) this.renderMap();
     };
-
+  },
+  created() {
     this.$store.watch(
       (state, getters) => getters.connected,
       newValue => {
