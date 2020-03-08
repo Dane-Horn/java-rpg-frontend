@@ -1,7 +1,6 @@
 <template>
   <div id="app2">
-    <v-app-bar dense dark>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-app-bar style="background-color: #DD1111">
       <v-toolbar-title>BBD RPG</v-toolbar-title>
     </v-app-bar>
     <v-app>
@@ -51,7 +50,7 @@ export default {
   },
   data() {
     return {
-      tileset: "dungeon"
+      tileset: ""
     };
   },
   methods: {
@@ -71,6 +70,7 @@ export default {
 }
 #app2 {
   font-family: ArcadeClassic;
+  cursor: default;
 }
 #app {
   font-family: ArcadeClassic;

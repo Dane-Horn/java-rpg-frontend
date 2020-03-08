@@ -190,6 +190,7 @@ export default {
             {},
             ""
           );
+          this.map = [];
           this.ctx.canvas.width--;
           this.ctx.canvas.width++;
         }
