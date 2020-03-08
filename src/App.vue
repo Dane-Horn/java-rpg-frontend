@@ -2,7 +2,7 @@
   <!-- App.vue -->
 <v-app>
   <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
-  <v-app-bar app flat style="background: transparent; height: fit-content!important;;">
+  <v-app-bar app flat style="background: transparent; height: fit-content!important; position: relative; flex: none!important;">
     <nav class="navbar navbar-expand-lg" style="background: transparent!important; width:100%">
         <a class="navbar-brand" href="#">
             <img src="https://i.ibb.co/rp1Rdd7/bbd-logo.png" alt="bbd-logo" border="0" style="width: 80px;" />
@@ -15,8 +15,8 @@
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item ">
-                    <a class="nav-link nes-text is-error" href="#">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
@@ -36,7 +36,9 @@
             <form class="form-inline my-2 my-lg-0"
                   style="display: flex; justify-content: space-evenly; flex-direction: row;">
                   <v-text-field
+                    id="search"
                     placeholder="Search"
+                    style="padding-top: 12px!important; margin-top: 4px;!important"
                     class=""
                   ></v-text-field>
                 <!-- <input class="nes-input" type="search" placeholder="Search" style="width: 70%"> -->
@@ -55,6 +57,32 @@
         <router-view></router-view>
       </v-container>
     </v-content>
+
+        <!-- <main role="main" class="inner cover" style="margin-bottom: auto; margin-top: auto;">
+        <div id="loginRow" class="row" style="padding: 5%; margin: auto;">
+            <div id="loginContainer" class="nes-container with-title">
+                <p class="title themeHeader">Login</p>
+                <div class="nes-field">
+                    <label for="username_field">Your Username</label>
+                    <input type="text" id="username_field" class="nes-input">
+                </div>
+                <br/>
+                <div class="nes-field">
+                    <label for="email_field">Your Email</label>
+                    <input type="text" id="email_field" class="nes-input">
+                </div>
+                <br/>
+                <div class="nes-field">
+                    <label for="name_password">Your Password</label>
+                    <input type="text" id="name_password" class="nes-input">
+                </div>
+                <br/>
+                <div>
+                    <button type="button" class="nes-btn is-error">Login</button>
+                </div>
+            </div>
+        </div>
+</main> -->
 
   <v-footer
     padless
@@ -81,6 +109,9 @@
 
 
 <style>
+  header {
+    position: relative;
+  }
   /*ELEMENT IDs*/
   html, body, pre, p, code, kbd, samp {
     font-family: 'Press Start 2P' !important;
@@ -92,23 +123,29 @@
 
   .v-toolbar__content {
     border-bottom: solid 4px;
-    height: fit-content!important;;
+    height: fit-content!important;
     /* border-color: var(--v-primary-base); */
   }
 
   /*ELEMENT CLASSES*/
   /*Nav Bar */
-  .navbar-light .navbar-nav .active>.nav-link {
-    color: #e76e55;
+  .navbar-nav .nav-link .navbar-brand {
+    color: var(--v-primary-base)!important;
   }
-  .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-    color: #CE372B;
+  .navbar-nav .active>.nav-link {
+    color: var(--v-secondary-base)!important;
   }
-  .navbar-light, .bg-light {
-    background-color: #ffffff!important;
-    border-bottom: solid 4px black;
+  .nav-link:focus .nav-link:hover .navbar-brand:hover{
+    color: var(--v-secondary-base)!important;
   }
 
+  .navbar-brand:hover{
+    color: var(--v-primary-base)!important;
+  }
+
+  .nav-link:hover {
+    color: var(--v-secondary-base)!important;
+  }
   /*ELEMENT SELECTORS*/
 
    /* INPUT FIELDS */
@@ -123,6 +160,9 @@
     left: 5px!important;
   }
 
+  .v-content {
+    margin-top: auto;
+  }
   .v-content__wrap {
     margin: auto;
   }
@@ -132,6 +172,14 @@
   }
 </style>
   
+  <style lang="scss">
+  #loginContainer {
+      width: 80%;
+      border-color: var(--v-primary-base)!important;
+  }
+</style>
+
+
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
 
@@ -158,12 +206,13 @@
 
   .themeHeader {
     font-family: $body-font-family, cursive !important;
-    color: #e76e55;;
+    color: var(--v-primary-base);
   }
 
   .title {
     font-family: $body-font-family, cursive !important;
-    color: #e76e55;;
+    // color: #e76e55;
+    color: var(--v-primary-base);
   }
 
   .retroBorder {

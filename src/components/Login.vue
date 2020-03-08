@@ -66,6 +66,7 @@
   </div>
 </template>
 
+
 <style>
 
   /*ELEMENT IDs*/
@@ -75,8 +76,10 @@
       justify-content: center;
   }
 
-  #loginContainer {
-      width: 80%;
+
+  .nes-container.with-title > .title {
+    /* background: var(--v-dark-base)!important; */
+    background-color:  var(--v-background-base)!important;
   }
 
 </style>

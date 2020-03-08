@@ -31,7 +31,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0"
                   style="display: flex; justify-content: space-evenly; flex-direction: row;">
-                <input class="nes-input" type="search" placeholder="Search" style="width: 70%">
+                <input id="searchbar" class="nes-input" type="search" placeholder="Search" style="width: 70%; padding-top: 12px!important; margin-top: 4px;!important">
                 <button class="btn nes-btn is-error" type="submit">Search</button>
             </form>
         </div>
