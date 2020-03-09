@@ -16,24 +16,28 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  <router-link to="/" class="nav-link">Home</router-link> 
+                    <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <!-- <a class="nav-link" href="#">Link</a> -->
+                    <router-link to="/profile" class="nav-link">Profile</router-link> 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    <!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+                    <router-link to="/map" class="nav-link" >Maze</router-link> 
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sign Up</a>
+                    <!-- <a class="nav-link" href="#">Sign Up</a> -->
+                    <router-link to="/signup" class="nav-link">Sign Up</router-link> 
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Login</a>
+                <li class="nav-item">
+                    <router-link to="/login" class="nav-link">Login</router-link>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0"
+            <!-- <form class="form-inline my-2 my-lg-0"
                   style="display: flex; justify-content: space-evenly; flex-direction: row;">
                   <v-text-field
                     id="search"
@@ -41,9 +45,8 @@
                     style="padding-top: 12px!important; margin-top: 4px;!important"
                     class=""
                   ></v-text-field>
-                <!-- <input class="nes-input" type="search" placeholder="Search" style="width: 70%"> -->
-                <button class="btn nes-btn is-error" type="submit">Search</button>
-            </form>
+                <button class="btn nes-btn is-error" type="submit" style="bottom: 3px; left: 3px;">Search</button>
+            </form> -->
         </div>
     </nav>
   </v-app-bar>
@@ -53,37 +56,9 @@
       <!-- Provides the application the proper gutter -->
       <v-container fluid>
         <!-- If using vue-router -->
-        <Login/>
         <router-view></router-view>
       </v-container>
     </v-content>
-
-        <!-- <main role="main" class="inner cover" style="margin-bottom: auto; margin-top: auto;">
-        <div id="loginRow" class="row" style="padding: 5%; margin: auto;">
-            <div id="loginContainer" class="nes-container with-title">
-                <p class="title themeHeader">Login</p>
-                <div class="nes-field">
-                    <label for="username_field">Your Username</label>
-                    <input type="text" id="username_field" class="nes-input">
-                </div>
-                <br/>
-                <div class="nes-field">
-                    <label for="email_field">Your Email</label>
-                    <input type="text" id="email_field" class="nes-input">
-                </div>
-                <br/>
-                <div class="nes-field">
-                    <label for="name_password">Your Password</label>
-                    <input type="text" id="name_password" class="nes-input">
-                </div>
-                <br/>
-                <div>
-                    <button type="button" class="nes-btn is-error">Login</button>
-                </div>
-            </div>
-        </div>
-</main> -->
-
   <v-footer
     padless
     style="border-top: solid 4px; background: transparent;"
@@ -116,17 +91,14 @@
   html, body, pre, p, code, kbd, samp {
     font-family: 'Press Start 2P' !important;
   }
-
   .v-application .title {
     font-family: 'Press Start 2P' !important;
   }
-
   .v-toolbar__content {
     border-bottom: solid 4px;
     height: fit-content!important;
     /* border-color: var(--v-primary-base); */
   }
-
   /*ELEMENT CLASSES*/
   /*Nav Bar */
   .navbar-nav .nav-link .navbar-brand {
@@ -138,16 +110,13 @@
   .nav-link:focus .nav-link:hover .navbar-brand:hover{
     color: var(--v-secondary-base)!important;
   }
-
   .navbar-brand:hover{
     color: var(--v-primary-base)!important;
   }
-
   .nav-link:hover {
     color: var(--v-secondary-base)!important;
   }
   /*ELEMENT SELECTORS*/
-
    /* INPUT FIELDS */
   .v-input__slot:before {
     border-style: none!important;
@@ -159,7 +128,6 @@
     top: 0px!important;
     left: 5px!important;
   }
-
   .v-content {
     margin-top: auto;
   }
@@ -173,27 +141,39 @@
 </style>
   
   <style lang="scss">
-  #loginContainer {
+  #fieldsetContainer {
       width: 80%;
       border-color: var(--v-primary-base)!important;
+  }
+
+//   #app {
+//   font-family: Avenir, Helvetica, Arial, sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   text-align: center;
+//   color: #2c3e50;
+// }
+
+  .nav-item {
+    a {
+        &.router-link-exact-active {
+        color: var(--v-secondary-base)!important;
+      }
+    }
   }
 </style>
 
 
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
-
   $body-font-family: 'Press Start 2P';
   $title-font: 'Press Start 2P';
-
   // .application {
   //   font-family: 'Press Start 2P', cursive;
   // }
-
   html, body, pre, p, code, kbd, samp {
     font-family: $body-font-family, cursive !important;
   }
-
   .v-application {
     font-family: $body-font-family, cursive !important;
     .title { // To pin point specific classes of some components
@@ -203,18 +183,15 @@
       font-family: $title-font, cursive !important;
     }
   }
-
   .themeHeader {
     font-family: $body-font-family, cursive !important;
     color: var(--v-primary-base);
   }
-
   .title {
     font-family: $body-font-family, cursive !important;
     // color: #e76e55;
     color: var(--v-primary-base);
   }
-
   .retroBorder {
     border-style: solid;
     border-width: 4px 0;
@@ -222,7 +199,6 @@
     padding: .5em;
     position: relative;
     z-index: 1;
-
     &:before {
       border: inherit;
       border-width: 0 4px;
@@ -236,23 +212,25 @@
       z-index: -1;
     }
   }
-
 </style>
 
 <script>
-  import Login from './components/Login';
-  // import NavBar from './components/NavBar';
+ import $ from 'jquery'
 
   export default {
     name: 'App',
-
     components: {
-      Login,
-      // NavBar
     },
-
     data: () => ({
       //
     }),
+    mounted: function () {
+    this.$nextTick(function () {
+        $( ".v-text-field__slot" ).addClass("retroBorder")
+        $( ".v-select__slot" ).addClass("retroBorder")
+      })
+    }
   };
+
+  
 </script>

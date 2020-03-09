@@ -1,18 +1,11 @@
 <template>
-  <div id="loginContainer" class="nes-container with-title">
+  <div id="fieldsetContainer" class="login nes-container with-title">
     <p class="title themeHeader" style="font-family: 'Press Start 2P', cursive !important">Login</p>
     <v-form
       ref="form"
       v-model="valid"
       lazy-validation
     >
-      <v-text-field
-        v-model="name"
-        :counter="10"
-        :rules="nameRules"
-        label="Name"
-        required
-      ></v-text-field>
 
       <v-text-field
         v-model="email"
@@ -22,6 +15,23 @@
         class=""
       ></v-text-field>
 
+      <!-- <v-text-field
+        v-model="name"
+        :counter="10"
+        :rules="nameRules"
+        label="Name"
+        required
+      ></v-text-field> -->
+
+      <v-text-field
+            v-model="password"
+            :rules="passwordRules"
+            :type="'password'"
+            label="Password"
+            required
+          ></v-text-field>
+
+<!-- 
       <v-select
         v-model="select"
         :items="items"
@@ -29,7 +39,7 @@
         label="Item"
         required
         class=""
-      ></v-select>
+      ></v-select> -->
 
       <v-checkbox
         v-model="checkbox"
@@ -66,7 +76,6 @@
   </div>
 </template>
 
-
 <style>
 
   /*ELEMENT IDs*/
@@ -88,6 +97,7 @@
   import $ from 'jquery'
 
   export default {
+    name: 'Login',
     data: () => ({
       valid: true,
       name: '',
@@ -99,13 +109,6 @@
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
       ],
       checkbox: false,
     }),
@@ -124,9 +127,9 @@
     },
     mounted: function () {
     this.$nextTick(function () {
-      $( ".v-text-field__slot" ).addClass("retroBorder")
-      $( ".v-select__slot" ).addClass("retroBorder")
-    })
-}
+        $( ".v-text-field__slot" ).addClass("retroBorder")
+        $( ".v-select__slot" ).addClass("retroBorder")
+      })
+    }
   }
 </script>
