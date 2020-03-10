@@ -1,7 +1,16 @@
 <template>
   <div id="app2">
-    <v-app-bar style="background-color: #DD1111">
-      <v-toolbar-title>BBD RPG</v-toolbar-title>
+    <v-app-bar elevation="0" style="background-color: #FFFFFF">
+      <v-col cols="1">
+        <v-img
+          src="https://i.ibb.co/rp1Rdd7/bbd-logo.png"
+          max-height="50px"
+          max-width="50px"
+        ></v-img>
+      </v-col>
+      <v-col cols="2">
+        <v-toolbar-title>BBD RPG</v-toolbar-title>
+      </v-col>
     </v-app-bar>
     <router-view></router-view>
   </div>
