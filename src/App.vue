@@ -1,33 +1,47 @@
 <template>
-  <div id="app2">
+  <v-app id="app2">
     <v-app-bar
+      height="60px"
+      flat
       style="text-align: center; font-size: 30px; border-bottom: 5px solid black; background-color: #FFFFFF"
     >
-      <v-img
-        @click.stop="drawer = !drawer"
-        src="https://i.ibb.co/rp1Rdd7/bbd-logo.png"
-        max-height="50px"
-        max-width="50px"
-      ></v-img>
-      <v-col>
-        BBD RPG
-      </v-col>
-      <v-col>
-        <router-link class="link" to="/home">Home</router-link>
-      </v-col>
-      <v-col cols="1">
-        <router-link class="link" to="/profile">Profile</router-link>
-      </v-col>
-      <v-col>
-        <router-link class="link" to="/maze">Maze</router-link>
-      </v-col>
-      <v-spacer></v-spacer>
-      <v-col>
-        <router-link class="link" to="/login">Login</router-link>
-      </v-col>
-      <v-col>
-        <router-link class="link" to="/signup">Signup</router-link>
-      </v-col>
+      <v-row>
+        <v-img
+          class="my-auto"
+          @click.stop="drawer = !drawer"
+          src="https://i.ibb.co/rp1Rdd7/bbd-logo.png"
+          max-height="60px"
+          max-width="60px"
+        ></v-img>
+        <v-col xs="10" sm="10" md="10" lg="1">
+          BBDRPG
+        </v-col>
+        <v-col>
+          <router-link class="link hidden-md-and-down" to="/home"
+            ><div>Home</div></router-link
+          >
+        </v-col>
+        <v-col cols="1">
+          <router-link class="link hidden-md-and-down" to="/profile"
+            ><div>Profile</div></router-link
+          >
+        </v-col>
+        <v-col>
+          <router-link class="link hidden-md-and-down" to="/maze"
+            ><div>Maze</div></router-link
+          >
+        </v-col>
+        <v-col>
+          <router-link class="link hidden-md-and-down" to="/login"
+            ><div>Login</div></router-link
+          >
+        </v-col>
+        <v-col>
+          <router-link class="link hidden-md-and-down" to="/signup"
+            ><div>Signup</div></router-link
+          >
+        </v-col>
+      </v-row>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" temporary absolute>
       <v-list nav dense>
@@ -71,7 +85,7 @@
       </v-list>
     </v-navigation-drawer>
     <router-view></router-view>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -95,11 +109,16 @@ export default {
 </script>
 
 <style>
+.d-none {
+  display: none;
+}
 .link {
   text-decoration: none;
+}
+.link > div {
   color: black;
 }
-.link:hover {
+.link > div:hover {
   color: red;
 }
 @font-face {
@@ -109,15 +128,23 @@ export default {
   src: local("ArcadeClassic"), url("assets/ARCADECLASSIC.woff") format("woff");
 }
 #app2 {
+  overflow: hidden;
+  max-height: 100%;
   font-family: ArcadeClassic;
   cursor: default;
+  color: black;
 }
 #app {
+  overflow: hidden;
   font-family: ArcadeClassic;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+html::-webkit-scrollbar {
+  display: none;
+  overflow: hidden;
 }
 </style>

@@ -1,26 +1,34 @@
 <template>
-  <v-form v-model="valid">
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field v-model="name" :rules="nameRules" :counter="10" label="Username" required></v-text-field>
-        </v-col>
+  <v-app>
+    <v-form v-model="valid">
+      <v-container>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="name"
+              :rules="nameRules"
+              :counter="10"
+              label="Username"
+              required
+            ></v-text-field>
+          </v-col>
 
-        <v-col cols="12" md="6">
-          <v-text-field
-            :append-icon=" showPassword ? 'mdi-eye' : 'mdi-eye-off' "
-            :type="showPassword ? 'text' : 'password'"
-            v-on:click:append="showPassword = !showPassword"
-            v-model="password"
-            :rules="passwordRules"
-            :counter="16"
-            label="Password"
-            required
-          ></v-text-field>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
+          <v-col cols="12" md="6">
+            <v-text-field
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
+              v-on:click:append="showPassword = !showPassword"
+              v-model="password"
+              :rules="passwordRules"
+              :counter="16"
+              label="Password"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </v-app>
 </template>
 
 <script>
@@ -45,5 +53,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
