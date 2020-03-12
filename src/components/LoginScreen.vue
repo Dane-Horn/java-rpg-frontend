@@ -27,7 +27,15 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-btn :disabled="!valid" @click="setName($event)">Login</v-btn>
+          <v-row align="end">
+            <v-col>
+              <v-btn :disabled="!valid" @click="setName($event)">Login</v-btn>
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col>
+              <a style="font-size: 12px">forgot password?</a>
+            </v-col>
+          </v-row>
         </v-container>
       </v-form>
     </v-card>

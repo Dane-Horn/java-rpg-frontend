@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     connected: false,
     stompClient: null,
     player: { name: "", level: 0 },
-    activePlayers: []
+    activePlayers: {}
   },
   mutations: {
     setConnected(state, connected) {

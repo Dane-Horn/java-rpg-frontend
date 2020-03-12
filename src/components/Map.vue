@@ -84,6 +84,11 @@ export default {
     },
     loadNewMap({ map, player }) {
       this.playerPos = player;
+      this.$store.state.stompClient.send(
+        `/app/player/move/${this.$store.state.player.name}`,
+        {},
+        JSON.stringify(this.playerPos)
+      );
       this.map = map;
       this.ctx.canvas.width = this.tileSize * this.map[0].length;
       this.ctx.canvas.height = this.tileSize * this.map.length;
@@ -141,6 +146,11 @@ export default {
       switch (this.map[tempPos.y][tempPos.x]) {
         case "0":
           this.playerPos = tempPos;
+          this.$store.state.stompClient.send(
+            `/app/player/move/${this.$store.state.player.name}`,
+            {},
+            JSON.stringify(this.playerPos)
+          );
           this.renderMap();
           break;
         case "$":
@@ -180,8 +190,8 @@ export default {
           this.$store.state.stompClient.subscribe(
             `/map/initialMap/${this.$store.state.player.name}`,
             message => {
-              let json = JSON.parse(message.body);
-              this.loadNewMap(json);
+              let player = JSON.parse(message.body);
+              this.loadNewMap({ map: player.map.map, player: player.position });
             }
           );
           this.$store.state.stompClient.send(
@@ -189,7 +199,6 @@ export default {
             {},
             ""
           );
-          this.getNewMap();
         } else {
           this.$store.state.stompClient.send(
             `/app/leave/${this.$store.state.player.name}`,
