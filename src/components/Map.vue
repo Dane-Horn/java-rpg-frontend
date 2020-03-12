@@ -104,7 +104,6 @@ export default {
       );
     },
     handleMovement(key) {
-      console.log(key);
       let tempPos = { x: this.playerPos.x, y: this.playerPos.y };
       switch (key) {
         case "8":

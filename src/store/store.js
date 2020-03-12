@@ -8,7 +8,8 @@ export const store = new Vuex.Store({
   state: {
     connected: false,
     stompClient: null,
-    player: { name: "", level: 0 }
+    player: { name: "", level: 0 },
+    activePlayers: []
   },
   mutations: {
     setConnected(state, connected) {
@@ -29,16 +30,21 @@ export const store = new Vuex.Store({
       state.stompClient.debug = null;
       state.stompClient.connect({}, () => {
         commit("setConnected", true);
+        state.stompClient.subscribe(`/player/active`, message => {
+          let players = JSON.parse(message.body);
+          state.activePlayers = players;
+        });
       });
     },
     disconnect({ commit, state }) {
       state.stompClient.send(`/app/leave/${state.player.name}`);
       state.stompClient.disconnect();
-      state.player.name = "";
+      state.activePlayers = [];
       commit("setConnected", false);
     }
   },
   getters: {
+    activePlayers: state => state.activePlayers,
     connected: state => state.connected,
     stompClient: state => state.stompClient
   }

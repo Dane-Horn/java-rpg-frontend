@@ -21,16 +21,9 @@ export default {
   },
   mounted() {
     this.$store.watch(
-      (state, getters) => getters.connected,
-      connected => {
-        if (connected) {
-          this.$store.state.stompClient.subscribe(`/player/active`, message => {
-            let players = JSON.parse(message.body);
-            this.activePlayers = players;
-          });
-        } else {
-          this.activePlayers = [];
-        }
+      (state, getters) => getters.activePlayers,
+      activePlayers => {
+        this.activePlayers = activePlayers;
       }
     );
   }
