@@ -150,25 +150,40 @@ export default {
           tempPos.x++;
           break;
       }
-      switch (this.map[tempPos.y][tempPos.x]) {
-        case "0":
-          this.playerPos = tempPos;
-          this.$store.state.stompClient.send(
-            `/app/player/move/${this.$store.state.player.name}`,
-            {},
-            JSON.stringify(this.playerPos)
-          );
-          this.renderMap();
-          break;
-        case "$":
-          this.$store.state.stompClient.send(
-            `/app/player/levelup/${this.$store.state.player.name}`,
-            {},
-            ""
-          );
-          this.getNewMap();
-          break;
+      if (this.containsEnemy(tempPos)) {
+        console.log("hit enemy");
+        this.removeEnemy(tempPos);
+        this.map[tempPos.y][tempPos.x] = "0";
+        this.renderMap();
+      } else if (this.map[tempPos.y][tempPos.x] == "0") {
+        this.playerPos = tempPos;
+        this.$store.state.stompClient.send(
+          `/app/player/move/${this.$store.state.player.name}`,
+          {},
+          JSON.stringify(this.playerPos)
+        );
+        this.renderMap();
+      } else if (this.map[tempPos.y][tempPos.x] == "$") {
+        this.$store.state.stompClient.send(
+          `/app/player/levelup/${this.$store.state.player.name}`,
+          {},
+          ""
+        );
+        this.getNewMap();
       }
+    },
+    containsEnemy(pos) {
+      for (let {
+        position: { x, y }
+      } of this.enemies) {
+        if (pos.x == x && pos.y == y) return true;
+      }
+      return false;
+    },
+    removeEnemy(pos) {
+      this.enemies = this.enemies.filter(
+        ({ position: { x, y } }) => x != pos.x || y != pos.y
+      );
     },
     load() {
       this.canvas = this.$refs.canvas;
