@@ -14,6 +14,8 @@ export default {
       canvas: null,
       ctx: null,
       map: [],
+      enemies: [],
+      items: [],
       playerPos: null,
       tilemap: new Image(),
       tileSize: 0,
@@ -81,15 +83,20 @@ export default {
         }
       }
       this.drawTile(this.playerPos, this.tiles.player);
+      for (let { position } of this.enemies) {
+        this.drawTile(position, { x: 0, y: 22 });
+      }
     },
-    loadNewMap({ map, player }) {
-      this.playerPos = player;
+    loadNewMap(player) {
+      this.playerPos = player.position;
+      this.map = player.map.map;
+      this.enemies = player.map.enemies;
+      this.items = player.map.items;
       this.$store.state.stompClient.send(
         `/app/player/move/${this.$store.state.player.name}`,
         {},
         JSON.stringify(this.playerPos)
       );
-      this.map = map;
       this.ctx.canvas.width = this.tileSize * this.map[0].length;
       this.ctx.canvas.height = this.tileSize * this.map.length;
       this.canvas.style.width = `${this.ctx.canvas.width * 2}px`;
@@ -196,7 +203,8 @@ export default {
             `/map/initialMap/${this.$store.state.player.name}`,
             message => {
               let player = JSON.parse(message.body);
-              this.loadNewMap({ map: player.map.map, player: player.position });
+              console.log(player);
+              this.loadNewMap(player);
             }
           );
           this.$store.state.stompClient.send(
