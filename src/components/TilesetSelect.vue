@@ -1,5 +1,5 @@
 <template>
-  <v-select @input="$emit('changed', $event)" :items="tilesets"></v-select>
+  <v-select @input="$emit('changed', $event)" :items="tilesets" value="retro"></v-select>
 </template>
 
 <script>
@@ -10,7 +10,10 @@ export default {
       tilesets: ["dungeon", "retro"]
     };
   },
-  methods: {}
+  methods: {},
+  mounted() {
+    this.$emit("changed", "retro");
+  }
 };
 </script>
 

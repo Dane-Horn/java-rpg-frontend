@@ -12,7 +12,7 @@ export default {
   methods: {
     setConnected() {
       if (this.$store.state.connected) this.$store.dispatch("disconnect");
-      else this.$store.dispatch("connect", "Dane");
+      else this.$store.dispatch("connect");
     }
   }
 };
