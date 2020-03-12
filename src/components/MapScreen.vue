@@ -3,9 +3,6 @@
     <v-container>
       <v-row>
         <v-col cols="2">
-          <ConnectButton />
-        </v-col>
-        <v-col cols="2">
           <TilesetSelect @changed="updateTileset" />
         </v-col>
       </v-row>
@@ -23,13 +20,12 @@
 </template>
 
 <script>
-import { Map, ConnectButton, PlayerList, TilesetSelect } from "./index";
+import { Map, PlayerList, TilesetSelect } from "./index";
 
 export default {
   name: "MapScreen",
   components: {
     Map,
-    ConnectButton,
     PlayerList,
     TilesetSelect
   },

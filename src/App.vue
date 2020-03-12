@@ -37,9 +37,17 @@
             <div>Login</div>
           </router-link>
         </v-col>
-        <v-col>
+        <v-col v-if="!$store.state.player.name">
           <router-link class="link hidden-md-and-down" to="/signup">
             <div>Signup</div>
+          </router-link>
+        </v-col>
+        <v-col
+          v-if="$store.state.player.name"
+          @click=" () => {$store.dispatch('disconnect'); $store.state.player.name = ''}"
+        >
+          <router-link class="link hidden-md-and-down" to="/login">
+            <div>Logout</div>
           </router-link>
         </v-col>
       </v-row>

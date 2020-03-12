@@ -9,11 +9,6 @@ export default {
     tileset: String,
     size: Object
   },
-  watch: {
-    tileset() {
-      this.loadTilemap();
-    }
-  },
   data() {
     return {
       canvas: null,
@@ -152,18 +147,30 @@ export default {
           this.getNewMap();
           break;
       }
+    },
+    load() {
+      this.canvas = this.$refs.canvas;
+      this.canvas.addEventListener("keydown", event => {
+        this.handleMovement(event.key);
+      });
+      this.ctx = this.canvas.getContext("2d");
+      this.loadTilemap("retro");
+      this.tilemap.onload = () => {
+        if (this.map.length > 0) this.renderMap();
+      };
+      this.$store.dispatch("connect");
+    }
+  },
+  watch: {
+    tileset() {
+      this.loadTilemap();
     }
   },
   mounted() {
-    this.canvas = this.$refs.canvas;
-    this.canvas.addEventListener("keydown", event => {
-      this.handleMovement(event.key);
-    });
-    this.ctx = this.canvas.getContext("2d");
-    this.loadTilemap("retro");
-    this.tilemap.onload = () => {
-      if (this.map.length > 0) this.renderMap();
-    };
+    this.load();
+  },
+  destroyed() {
+    this.$store.dispatch("disconnect");
   },
   created() {
     this.$store.watch(
