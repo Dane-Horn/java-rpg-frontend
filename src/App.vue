@@ -13,7 +13,10 @@
           max-height="60px"
           max-width="60px"
         ></v-img>
-        <v-col xs="10" sm="10" md="10" lg="1">BBDRPG</v-col>
+        <v-col xs="10" sm="10" md="10" lg="1">
+          <span v-if="$store.state.player.name">{{$store.state.player.name}}</span>
+          <span v-else>BBDRPG</span>
+        </v-col>
         <v-col>
           <router-link class="link hidden-md-and-down" to="/home">
             <div>Home</div>
@@ -32,11 +35,6 @@
         <v-col v-if="!$store.state.player.name">
           <router-link class="link hidden-md-and-down" to="/login">
             <div>Login</div>
-          </router-link>
-        </v-col>
-        <v-col v-else @click="$store.dispatch('disconnect')">
-          <router-link class="link hidden-md-and-down" to="/login">
-            <div>Logout</div>
           </router-link>
         </v-col>
         <v-col>

@@ -27,7 +27,7 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-btn @click="setName($event)">Login</v-btn>
+          <v-btn :disabled="!valid" @click="setName($event)">Login</v-btn>
         </v-container>
       </v-form>
     </v-card>
@@ -56,6 +56,7 @@ export default {
   methods: {
     setName() {
       this.$store.commit("setPlayerName", this.name);
+      this.$router.push("maze");
     }
   }
 };
