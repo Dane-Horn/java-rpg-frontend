@@ -6,11 +6,12 @@ import VueRouter from "vue-router";
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 
-import { MapScreen, LoginScreen } from "./components/index";
+import { MapScreen, LoginScreen, Preferences } from "./components/index";
 const router = new VueRouter({
   routes: [
     { path: "/login", component: LoginScreen },
-    { path: "/maze", component: MapScreen }
+    { path: "/maze", component: MapScreen },
+    { path: "/preferences", component: Preferences },
   ]
 });
 

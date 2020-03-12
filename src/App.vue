@@ -38,8 +38,11 @@
           </router-link>
         </v-col>
         <v-col v-if="!$store.state.player.name">
-          <router-link class="link hidden-md-and-down" to="/signup">
+          <!-- <router-link class="link hidden-md-and-down" to="/signup">
             <div>Signup</div>
+          </router-link> -->
+          <router-link class="link hidden-md-and-down" to="/preferences">
+            <div>Preferences</div>
           </router-link>
         </v-col>
         <v-col
@@ -75,9 +78,14 @@
               <v-list-item-title>Login</v-list-item-title>
             </v-list-item>
           </router-link>
-          <router-link class="link" to="/signup">
+          <!-- <router-link class="link" to="/signup">
             <v-list-item>
               <v-list-item-title>Signup</v-list-item-title>
+            </v-list-item>
+          </router-link> -->
+          <router-link class="link" to="/preferences">
+            <v-list-item>
+              <v-list-item-title>Preferences</v-list-item-title>
             </v-list-item>
           </router-link>
         </v-list-item-group>
