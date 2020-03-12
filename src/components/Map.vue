@@ -14,6 +14,8 @@ export default {
       canvas: null,
       ctx: null,
       map: [],
+      enemies: [],
+      items: [],
       playerPos: null,
       tilemap: new Image(),
       tileSize: 0,
@@ -81,10 +83,23 @@ export default {
         }
       }
       this.drawTile(this.playerPos, this.tiles.player);
+      for (let { position } of this.enemies) {
+        this.drawTile(position, { x: 0, y: 22 });
+      }
+      for (let { position } of this.items) {
+        this.drawTile(position, { x: 0, y: 0 });
+      }
     },
-    loadNewMap({ map, player }) {
-      this.playerPos = player;
-      this.map = map;
+    loadNewMap(player) {
+      this.playerPos = player.position;
+      this.map = player.map.map;
+      this.enemies = player.map.enemies;
+      this.items = player.map.items;
+      this.$store.state.stompClient.send(
+        `/app/player/move/${this.$store.state.player.name}`,
+        {},
+        JSON.stringify(this.playerPos)
+      );
       this.ctx.canvas.width = this.tileSize * this.map[0].length;
       this.ctx.canvas.height = this.tileSize * this.map.length;
       this.canvas.style.width = `${this.ctx.canvas.width * 2}px`;
@@ -138,15 +153,56 @@ export default {
           tempPos.x++;
           break;
       }
-      switch (this.map[tempPos.y][tempPos.x]) {
-        case "0":
-          this.playerPos = tempPos;
-          this.renderMap();
-          break;
-        case "$":
-          this.getNewMap();
-          break;
+      if (this.containsItem(tempPos)) {
+        this.removeItem(tempPos);
+        this.renderMap();
+      } else if (this.containsEnemy(tempPos)) {
+        console.log("hit enemy");
+        this.removeEnemy(tempPos);
+        this.map[tempPos.y][tempPos.x] = "0";
+        this.renderMap();
+      } else if (this.map[tempPos.y][tempPos.x] == "0") {
+        this.playerPos = tempPos;
+        this.$store.state.stompClient.send(
+          `/app/player/move/${this.$store.state.player.name}`,
+          {},
+          JSON.stringify(this.playerPos)
+        );
+        this.renderMap();
+      } else if (this.map[tempPos.y][tempPos.x] == "$") {
+        this.$store.state.stompClient.send(
+          `/app/player/levelup/${this.$store.state.player.name}`,
+          {},
+          ""
+        );
+        this.getNewMap();
       }
+    },
+    containsItem(pos) {
+      for (let {
+        position: { x, y }
+      } of this.items) {
+        if (pos.x == x && pos.y == y) return true;
+      }
+      return false;
+    },
+    removeItem(pos) {
+      this.items = this.items.filter(
+        ({ position: { x, y } }) => x != pos.x || y != pos.y
+      );
+    },
+    containsEnemy(pos) {
+      for (let {
+        position: { x, y }
+      } of this.enemies) {
+        if (pos.x == x && pos.y == y) return true;
+      }
+      return false;
+    },
+    removeEnemy(pos) {
+      this.enemies = this.enemies.filter(
+        ({ position: { x, y } }) => x != pos.x || y != pos.y
+      );
     },
     load() {
       this.canvas = this.$refs.canvas;
@@ -180,8 +236,9 @@ export default {
           this.$store.state.stompClient.subscribe(
             `/map/initialMap/${this.$store.state.player.name}`,
             message => {
-              let json = JSON.parse(message.body);
-              this.loadNewMap(json);
+              let player = JSON.parse(message.body);
+              console.log(player);
+              this.loadNewMap(player);
             }
           );
           this.$store.state.stompClient.send(
@@ -206,5 +263,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

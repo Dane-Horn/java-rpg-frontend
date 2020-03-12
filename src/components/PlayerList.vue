@@ -1,10 +1,13 @@
 <template>
-  <v-list disabled>
+  <v-list disabled two-line>
     <v-subheader>Active Players</v-subheader>
     <v-list-item-group>
       <v-list-item v-for="(player, i) in activePlayers" :key="i">
         <v-list-item-content>
-          <v-list-item-title v-html="player"></v-list-item-title>
+          <v-list-item-title v-html="player.name"></v-list-item-title>
+          <v-list-item-subtitle
+            v-html="`Level: ${player.level}`"
+          ></v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list-item-group>
@@ -30,5 +33,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
