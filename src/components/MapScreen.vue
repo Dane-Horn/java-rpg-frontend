@@ -6,10 +6,7 @@
           <ConnectButton />
         </v-col>
         <v-col cols="2">
-          <PlayerNameInput />
-        </v-col>
-        <v-col cols="2">
-          <TilesetSelect v-on:changed="updateTileset" />
+          <TilesetSelect @changed="updateTileset" />
         </v-col>
       </v-row>
       <v-row>
@@ -26,13 +23,7 @@
 </template>
 
 <script>
-import {
-  Map,
-  ConnectButton,
-  PlayerList,
-  PlayerNameInput,
-  TilesetSelect
-} from "./index";
+import { Map, ConnectButton, PlayerList, TilesetSelect } from "./index";
 
 export default {
   name: "MapScreen",
@@ -40,7 +31,6 @@ export default {
     Map,
     ConnectButton,
     PlayerList,
-    PlayerNameInput,
     TilesetSelect
   },
   data() {

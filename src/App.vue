@@ -13,33 +13,36 @@
           max-height="60px"
           max-width="60px"
         ></v-img>
-        <v-col xs="10" sm="10" md="10" lg="1">
-          BBDRPG
-        </v-col>
+        <v-col xs="10" sm="10" md="10" lg="1">BBDRPG</v-col>
         <v-col>
-          <router-link class="link hidden-md-and-down" to="/home"
-            ><div>Home</div></router-link
-          >
+          <router-link class="link hidden-md-and-down" to="/home">
+            <div>Home</div>
+          </router-link>
         </v-col>
         <v-col cols="1">
-          <router-link class="link hidden-md-and-down" to="/profile"
-            ><div>Profile</div></router-link
-          >
+          <router-link class="link hidden-md-and-down" to="/profile">
+            <div>Profile</div>
+          </router-link>
         </v-col>
         <v-col>
-          <router-link class="link hidden-md-and-down" to="/maze"
-            ><div>Maze</div></router-link
-          >
+          <router-link class="link hidden-md-and-down" to="/maze">
+            <div>Maze</div>
+          </router-link>
+        </v-col>
+        <v-col v-if="!$store.state.player.name">
+          <router-link class="link hidden-md-and-down" to="/login">
+            <div>Login</div>
+          </router-link>
+        </v-col>
+        <v-col v-else @click="$store.dispatch('disconnect')">
+          <router-link class="link hidden-md-and-down" to="/login">
+            <div>Logout</div>
+          </router-link>
         </v-col>
         <v-col>
-          <router-link class="link hidden-md-and-down" to="/login"
-            ><div>Login</div></router-link
-          >
-        </v-col>
-        <v-col>
-          <router-link class="link hidden-md-and-down" to="/signup"
-            ><div>Signup</div></router-link
-          >
+          <router-link class="link hidden-md-and-down" to="/signup">
+            <div>Signup</div>
+          </router-link>
         </v-col>
       </v-row>
     </v-app-bar>
@@ -48,37 +51,27 @@
         <v-list-item-group active-class="deep-purple--text text--accent-4">
           <router-link class="link" to="/home">
             <v-list-item>
-              <v-list-item-title>
-                Home
-              </v-list-item-title>
+              <v-list-item-title>Home</v-list-item-title>
             </v-list-item>
           </router-link>
           <router-link class="link" to="/profile">
             <v-list-item>
-              <v-list-item-title>
-                Profile
-              </v-list-item-title>
+              <v-list-item-title>Profile</v-list-item-title>
             </v-list-item>
           </router-link>
           <router-link class="link" to="/maze">
             <v-list-item>
-              <v-list-item-title>
-                Maze
-              </v-list-item-title>
+              <v-list-item-title>Maze</v-list-item-title>
             </v-list-item>
           </router-link>
           <router-link class="link" to="/login">
             <v-list-item>
-              <v-list-item-title>
-                Login
-              </v-list-item-title>
+              <v-list-item-title>Login</v-list-item-title>
             </v-list-item>
           </router-link>
           <router-link class="link" to="/signup">
             <v-list-item>
-              <v-list-item-title>
-                Signup
-              </v-list-item-title>
+              <v-list-item-title>Signup</v-list-item-title>
             </v-list-item>
           </router-link>
         </v-list-item-group>
