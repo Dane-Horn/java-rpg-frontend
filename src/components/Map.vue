@@ -199,6 +199,7 @@ export default {
             {},
             ""
           );
+          this.getNewMap();
         } else {
           this.$store.state.stompClient.send(
             `/app/leave/${this.$store.state.player.name}`,
@@ -215,5 +216,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
