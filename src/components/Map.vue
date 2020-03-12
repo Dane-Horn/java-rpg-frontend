@@ -86,6 +86,9 @@ export default {
       for (let { position } of this.enemies) {
         this.drawTile(position, { x: 0, y: 22 });
       }
+      for (let { position } of this.items) {
+        this.drawTile(position, { x: 0, y: 0 });
+      }
     },
     loadNewMap(player) {
       this.playerPos = player.position;
@@ -150,7 +153,10 @@ export default {
           tempPos.x++;
           break;
       }
-      if (this.containsEnemy(tempPos)) {
+      if (this.containsItem(tempPos)) {
+        this.removeItem(tempPos);
+        this.renderMap();
+      } else if (this.containsEnemy(tempPos)) {
         console.log("hit enemy");
         this.removeEnemy(tempPos);
         this.map[tempPos.y][tempPos.x] = "0";
@@ -171,6 +177,19 @@ export default {
         );
         this.getNewMap();
       }
+    },
+    containsItem(pos) {
+      for (let {
+        position: { x, y }
+      } of this.items) {
+        if (pos.x == x && pos.y == y) return true;
+      }
+      return false;
+    },
+    removeItem(pos) {
+      this.items = this.items.filter(
+        ({ position: { x, y } }) => x != pos.x || y != pos.y
+      );
     },
     containsEnemy(pos) {
       for (let {
