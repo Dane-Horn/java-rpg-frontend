@@ -154,6 +154,11 @@ export default {
           this.renderMap();
           break;
         case "$":
+          this.$store.state.stompClient.send(
+            `/app/player/levelup/${this.$store.state.player.name}`,
+            {},
+            ""
+          );
           this.getNewMap();
           break;
       }
