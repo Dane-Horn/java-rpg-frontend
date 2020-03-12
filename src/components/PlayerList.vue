@@ -6,7 +6,7 @@
         <v-list-item-content>
           <v-list-item-title v-html="player.name"></v-list-item-title>
           <v-list-item-subtitle
-            v-html="`Level: ${player.level}`"
+            v-html="`Level: ${player.level}; Health: ${player.hitPoints}`"
           ></v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>

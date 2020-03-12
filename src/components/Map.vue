@@ -11,8 +11,10 @@ export default {
   },
   data() {
     return {
+      mapSubscription: null,
       canvas: null,
       ctx: null,
+      player: null,
       map: [],
       enemies: [],
       items: [],
@@ -95,11 +97,6 @@ export default {
       this.map = player.map.map;
       this.enemies = player.map.enemies;
       this.items = player.map.items;
-      this.$store.state.stompClient.send(
-        `/app/player/move/${this.$store.state.player.name}`,
-        {},
-        JSON.stringify(this.playerPos)
-      );
       this.ctx.canvas.width = this.tileSize * this.map[0].length;
       this.ctx.canvas.height = this.tileSize * this.map.length;
       this.canvas.style.width = `${this.ctx.canvas.width * 2}px`;
@@ -111,6 +108,13 @@ export default {
         `/app/initializeMap/${this.$store.state.player.name}`,
         {},
         JSON.stringify({ x: 10, y: 10 })
+      );
+    },
+    updateServerPlayer() {
+      this.$store.state.stompClient.send(
+        `/app/player/update/${this.$store.state.player.name}`,
+        {},
+        JSON.stringify(this.player)
       );
     },
     handleMovement(key) {
@@ -154,29 +158,24 @@ export default {
           break;
       }
       if (this.containsItem(tempPos)) {
+        this.player.hitPoints += 50;
         this.removeItem(tempPos);
         this.renderMap();
       } else if (this.containsEnemy(tempPos)) {
-        console.log("hit enemy");
-        this.removeEnemy(tempPos);
+        let enemy = this.getEnemy(tempPos);
+        this.player.hitPoints -= enemy.maxAttackPoints;
+        enemy.hitPoints -= this.player.maxAttackPoints;
+        if (enemy.hitPoints <= 0) this.removeEnemy(tempPos);
         this.map[tempPos.y][tempPos.x] = "0";
         this.renderMap();
       } else if (this.map[tempPos.y][tempPos.x] == "0") {
         this.playerPos = tempPos;
-        this.$store.state.stompClient.send(
-          `/app/player/move/${this.$store.state.player.name}`,
-          {},
-          JSON.stringify(this.playerPos)
-        );
+        this.player.position = tempPos;
         this.renderMap();
       } else if (this.map[tempPos.y][tempPos.x] == "$") {
-        this.$store.state.stompClient.send(
-          `/app/player/levelup/${this.$store.state.player.name}`,
-          {},
-          ""
-        );
         this.getNewMap();
       }
+      this.updateServerPlayer();
     },
     containsItem(pos) {
       for (let {
@@ -189,6 +188,11 @@ export default {
     removeItem(pos) {
       this.items = this.items.filter(
         ({ position: { x, y } }) => x != pos.x || y != pos.y
+      );
+    },
+    getEnemy(pos) {
+      return this.enemies.find(
+        ({ position: { x, y } }) => x == pos.x && y == pos.y
       );
     },
     containsEnemy(pos) {
@@ -233,11 +237,15 @@ export default {
       (state, getters) => getters.connected,
       newValue => {
         if (newValue === true) {
-          this.$store.state.stompClient.subscribe(
+          if (this.mapSubscription) this.mapSubscription.unsubscribe();
+          this.mapSubscription = this.$store.state.stompClient.subscribe(
             `/map/initialMap/${this.$store.state.player.name}`,
             message => {
               let player = JSON.parse(message.body);
-              console.log(player);
+              this.$store.commit("setPlayer", player);
+              this.player = player;
+              this.player.level++;
+              this.updateServerPlayer();
               this.loadNewMap(player);
             }
           );
