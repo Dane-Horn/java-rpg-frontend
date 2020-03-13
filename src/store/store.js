@@ -45,7 +45,7 @@ export const store = new Vuex.Store({
   actions: {
     connect({ commit, state }) {
       commit("setPlayerLevel", 1);
-      let socket = new Sockjs("http://192.168.1.56:8080/gs-guide-websocket");
+      let socket = new Sockjs("http://192.168.47.130:8080/gs-guide-websocket");
       state.stompClient = stomp.over(socket);
       state.stompClient.debug = null;
       state.stompClient.connect({}, () => {

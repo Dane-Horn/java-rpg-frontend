@@ -1,24 +1,7 @@
 <template>
-  <v-app>
-    <v-card class="mx-auto">
+  <div id="fieldsetContainer" class="login nes-container with-title">
+    <p class="title themeHeader" style="font-family: 'Press Start 2P', cursive !important">Login</p>
       <v-form v-model="isValid" v-on:submit.prevent ref="form">
-        <v-container>
-          <v-row>
-            <!-- <v-col cols="12" md="6">
-              <v-text-field
-                id="username"
-                label="Username"
-                name="username"
-                v-model="name"
-                :rules="nameRules"
-                :counter="10"
-                @focus="focusInputs"
-                v-on:keyup.enter="login"                
-                required
-              ></v-text-field>
-            </v-col> -->
-
-            <v-col cols="12" md="6">
               <v-text-field
                 id="email"
                 label="Email"
@@ -31,9 +14,7 @@
                 required
                 ref="email"
               ></v-text-field>
-            </v-col>
 
-            <v-col cols="12" md="6">
               <v-text-field
                 id="password"
                 label="Password"
@@ -48,24 +29,44 @@
                 :counter="16"
                 required
               ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row align="end">
-            <v-col>
-              <v-btn :disabled="!isValid" @click="login()">Login</v-btn>
-            </v-col>
-            <v-spacer></v-spacer>
-            <v-col>
-              <router-link class="link" style="font-size: 12px" to="/forgotpassword">Forgot Password?</router-link>
-            </v-col>
-          </v-row>
-        </v-container>
+
+              <div style="float: right; margin-top: 20px">
+                <router-link class="link" style="font-size: 12px" to="/forgotpassword">Forgot Password?</router-link>
+                <br/>
+                <v-btn 
+                color="error"
+                class="mr-4 nes-btn"
+                :disabled="!isValid" 
+                @click="login()"
+                style="margin-top: 20px; float: right;"
+                >
+                Login
+                </v-btn>    
+              </div>          
       </v-form>
-    </v-card>
-  </v-app>
+  </div>
 </template>
 
+<style>
+
+  /*ELEMENT IDs*/
+  #loginRow {
+      padding: 5% 10% 5% 10%;
+      display: flex;
+      justify-content: center;
+  }
+
+
+  .nes-container.with-title > .title {
+    /* background: var(--v-dark-base)!important; */
+    background-color:  var(--v-background-base)!important;
+  }
+
+</style>
+
+
 <script>
+import $ from 'jquery'
 
 import LoginService from "@/api/login.service.js";
 
@@ -180,8 +181,12 @@ export default {
       // this.errors = {};
       this.isError = false;
     }
-  }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+        $( ".v-text-field__slot" ).addClass("retroBorder")
+        $( ".v-select__slot" ).addClass("retroBorder")
+      })
+    }
 };
 </script>
-
-<style></style>
