@@ -56,7 +56,7 @@
             </v-col>
             <v-spacer></v-spacer>
             <v-col>
-              <a style="font-size: 12px">forgot password?</a>
+              <router-link class="link" style="font-size: 12px" to="/forgotpassword">Forgot Password?</router-link>
             </v-col>
           </v-row>
         </v-container>
@@ -116,41 +116,68 @@ export default {
       this.loading = true;
       this.disabled = true;
       
-      
       LoginService.login(this.email, this.password).then(({ data }) => {
-        if (data) {
-          this.loginSucceeded = true;
-          this.successMessage = "You will be redirected shortly.";
 
-          this.setUserID(data);
-          this.setUserName();
+        if (data) {        
+          if (isNaN(data))
+          {
+            if (data.includes("Incorrect password") || 
+                data.includes("Please enter password") ||
+                data.includes("No such user") ||
+                data.includes("Please enter email")) {
+                  this.$refs.form.resetValidation();
+                  this.$refs.form.reset();
+                  this.$refs.email.focus();
 
-          setTimeout(() => {
-            this.setName();
+                  this.isError = true;
+                  // this.errors = data.errors;
+
+                  this.email = "";
+                  this.password = "";
+
+                  this.loading = false;
+                  this.disabled = false;
+            }
+          }
+          else {
+
+            this.loginSucceeded = true;
+            this.successMessage = "Login Successful. You will be redirected shortly.";
+            console.log(this.successMessage)
+
+            this.setUserID(data);
+            this.setUserName();
+
+            setTimeout(() => {
+              this.setName();
               this.$router.push({ path: "/maze" });
-          }, 400);
-        }
-        this.loading = false;
-        this.disabled = false;
-      }).catch(err => {
+            }, 400);
+            }
+            this.loading = false;
+            this.disabled = false;
+          }
+        })
+      .catch(
+        (error) => {       
+          console.log(error);
           this.$refs.form.resetValidation();
           this.$refs.form.reset();
           this.$refs.email.focus();
 
           this.isError = true;
-          this.errors['login'] = err.response.data.error;
+          // this.errors['login'] = error.response.data.error;
 
-          this.email = '';
-          this.password = '';
+          this.email = "";
+          this.password = "";
 
           this.loading = false;
           this.disabled = false;
-      })
+        });
     },
     focusInputs() {
       this.loginSucceeded = false;
       this.successMessage = "";
-      this.errors = {};
+      // this.errors = {};
       this.isError = false;
     }
   }

@@ -22,11 +22,11 @@
             <div>Home</div>
           </router-link>
         </v-col>
-        <v-col cols="1">
+        <!-- <v-col cols="1">
           <router-link class="link hidden-md-and-down" to="/profile">
             <div>Profile</div>
           </router-link>
-        </v-col>
+        </v-col> -->
         <v-col>
           <router-link class="link hidden-md-and-down" to="/maze">
             <div>Maze</div>
@@ -38,13 +38,15 @@
           </router-link>
         </v-col>
         <v-col v-if="!$store.state.player.name">
-          <!-- <router-link class="link hidden-md-and-down" to="/signup">
+          <router-link class="link hidden-md-and-down" to="/register">
             <div>Signup</div>
-          </router-link> -->
+          </router-link>
+        </v-col>
+        <v-col v-if="$store.state.player.name">
           <router-link class="link hidden-md-and-down" to="/preferences">
             <div>Preferences</div>
           </router-link>
-        </v-col>
+          </v-col>
         <v-col
           v-if="$store.state.player.name"
           @click=" () => {$store.dispatch('disconnect'); $store.state.player.name = ''}"
@@ -78,11 +80,11 @@
               <v-list-item-title>Login</v-list-item-title>
             </v-list-item>
           </router-link>
-          <!-- <router-link class="link" to="/signup">
+          <router-link class="link" to="/register">
             <v-list-item>
               <v-list-item-title>Signup</v-list-item-title>
             </v-list-item>
-          </router-link> -->
+          </router-link>
           <router-link class="link" to="/preferences">
             <v-list-item>
               <v-list-item-title>Preferences</v-list-item-title>

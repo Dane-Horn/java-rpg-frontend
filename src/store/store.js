@@ -31,7 +31,7 @@ export const store = new Vuex.Store({
       state.userID = id;
     },
     setUserLoggedin(state, bool) {
-      state.userID = bool;
+      state.userLoggedin = bool;
     },
     setUserName(state) {
       GetUserInformationService.getUserInformation().then(({ data }) => {
