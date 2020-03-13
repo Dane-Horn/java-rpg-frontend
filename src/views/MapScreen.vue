@@ -1,20 +1,19 @@
 <template>
-    <v-container>
-      <v-row>
-        <v-col cols="2">
-          <TilesetSelect @changed="updateTileset" />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="2">
-          <PlayerList />
-        </v-col>
-        <v-col>
-          <Map :tileset="tileset"></Map>
-        </v-col>
-        <v-col cols="2"></v-col>
-      </v-row>
-    </v-container>
+    <div>
+        <TilesetSelect style="text-align: center;" @changed="updateTileset" />
+        <v-container>        
+            <v-row>
+                <v-col>
+                    <PlayerList />
+                </v-col>
+                <v-col>
+                    <Map :tileset="tileset"></Map>
+                </v-col>
+                <v-col>
+                </v-col>
+            </v-row>
+        </v-container>
+    </div>
 </template>
 
 <script>
