@@ -1,24 +1,27 @@
 <template>
   <v-app>
-    <v-card class="mx-auto">
+    <v-card class="mx-auto" style="width: 50%;">
       <v-form v-model="isValid" v-on:submit.prevent ref="form">
         <v-container>
           <v-row>
-            <!-- <v-col cols="12" md="6">
+            <v-col>
               <v-text-field
                 id="username"
                 label="Username"
                 name="username"
-                v-model="name"
-                :rules="nameRules"
+                v-model="username"
+                :rules="usernameRules"
                 :counter="10"
                 @focus="focusInputs"
-                v-on:keyup.enter="login"                
+                v-on:keyup.enter="register"                
                 required
+                ref="username"
               ></v-text-field>
-            </v-col> -->
+            </v-col>
+          </v-row>
 
-            <v-col cols="12" md="6">
+          <v-row>
+            <v-col>
               <v-text-field
                 id="email"
                 label="Email"
@@ -27,13 +30,14 @@
                 v-model="email"
                 :rules="emailRules"
                 @focus="focusInputs"
-                v-on:keyup.enter="login"                
+                v-on:keyup.enter="register"                
                 required
-                ref="email"
               ></v-text-field>
             </v-col>
+          </v-row>
 
-            <v-col cols="12" md="6">
+          <v-row>
+            <v-col>
               <v-text-field
                 id="password"
                 label="Password"
@@ -44,20 +48,21 @@
                 v-model="password"
                 :rules="passwordRules"
                 @focus="focusInputs"
-                v-on:keyup.enter="login"
+                v-on:keyup.enter="register"
                 :counter="16"
                 required
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row align="end">
+          <v-row>
             <v-col>
-              <v-btn :disabled="!isValid" @click="login()">Login</v-btn>
+              <router-link class="link" style="font-size: 12px" to="/login">Already Registered?</router-link>
             </v-col>
-            <v-spacer></v-spacer>
+          </v-row>
+          <v-row>
             <v-col>
-              <router-link class="link" style="font-size: 12px" to="/forgotpassword">Forgot Password?</router-link>
-            </v-col>
+              <v-btn :disabled="!isValid" @click="register()">Register</v-btn>
+            </v-col>            
           </v-row>
         </v-container>
       </v-form>
@@ -67,22 +72,20 @@
 
 <script>
 
-import LoginService from "@/api/login.service.js";
-
-import { mapMutations } from 'vuex';
+import RegisterService from "@/api/register.service.js";
 
 export default {
-  name: "LoginScreen",
+  name: "RegisterScreen",
   data: () => ({
-    // name: "",
+    username: "",
     email:"",
     password: "",
     showPassword: false,  
-    // nameRules: [
-    //   v => !!v || "Name is required",
-    //   v => v.length <= 10 || "Name may not be longer than 10 characters",
-    //   v => /^\w+$/.test(v) || "Name can only contain alphanumeric characters"
-    // ],
+    usernameRules: [
+      v => !!v || "Name is required",
+      v => v.length <= 10 || "Name may not be longer than 10 characters",
+      v => /^\w+$/.test(v) || "Name can only contain alphanumeric characters"
+    ],
     emailRules: [
         v => !!v || 'Email is required',
         v => /.+@.+\..+/.test(v) || 'Email must be valid',
@@ -95,62 +98,43 @@ export default {
     isValid: false,
     isError: false,
     errors: {},
-    loginSucceeded: false,
+    registerSucceeded: false,
     successMessage: "",
     loading: false,
     disabled: false
   }),
   methods: {
-    ...mapMutations([
-      'setUserID',
-      'setUserName'
-    ]),
-    setName() {
-      this.$store.commit("setPlayerName", this.$store.state.userName);
-      this.$router.push("maze");
-      // this.$router.push({ path: "/maze" });
-    },
-    login() {
+    register() {
       if (!this.isValid)
         return;
       this.loading = true;
-      this.disabled = true;
+      this.disabled = true;      
       
-      LoginService.login(this.email, this.password).then(({ data }) => {
-
+      RegisterService.register(this.username, this.email, this.password).then(({ data }) => {
         if (data) {        
-          if (isNaN(data))
-          {
-            if (data.includes("Incorrect password") || 
-                data.includes("Please enter password") ||
-                data.includes("No such user") ||
-                data.includes("Please enter email")) {
-                  this.$refs.form.resetValidation();
-                  this.$refs.form.reset();
-                  this.$refs.email.focus();
+          if (data.includes("User already exist")) {
+                this.$refs.form.resetValidation();
+                this.$refs.form.reset();
+                this.$refs.username.focus();
 
-                  this.isError = true;
-                  // this.errors = data.errors;
+                this.isError = true;
+                // this.errors = data.errors;
 
-                  this.email = "";
-                  this.password = "";
+                this.username = "";
+                this.email = "";
+                this.password = "";
 
-                  this.loading = false;
-                  this.disabled = false;
-            }
+                this.loading = false;
+                this.disabled = false;
           }
           else {
 
-            this.loginSucceeded = true;
-            this.successMessage = "Login Successful. You will be redirected shortly.";
+            this.registerSucceeded = true;
+            this.successMessage = "Registration Successful. You will be redirected shortly.";
             console.log(this.successMessage)
 
-            this.setUserID(data);
-            this.setUserName();
-
             setTimeout(() => {
-              this.setName();
-              this.$router.push({ path: "/maze" });
+              this.$router.push({ path: "/login" });
             }, 400);
             }
             this.loading = false;
@@ -162,11 +146,12 @@ export default {
           console.log(error);
           this.$refs.form.resetValidation();
           this.$refs.form.reset();
-          this.$refs.email.focus();
+          this.$refs.username.focus();
 
           this.isError = true;
-          // this.errors['login'] = error.response.data.error;
+          // this.errors['registration'] = error.response.data.error;
 
+          this.username = "";
           this.email = "";
           this.password = "";
 
@@ -175,9 +160,9 @@ export default {
         });
     },
     focusInputs() {
-      this.loginSucceeded = false;
+      this.registerSucceeded = false;
       this.successMessage = "";
-      // this.errors = {};
+      this.errors = {};
       this.isError = false;
     }
   }
