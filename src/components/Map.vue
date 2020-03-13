@@ -89,7 +89,7 @@ export default {
         this.drawTile(position, { x: 0, y: 22 });
       }
       for (let { position } of this.items) {
-        this.drawTile(position, { x: 0, y: 0 });
+        this.drawTile(position, { x: 6, y: 9 });
       }
     },
     loadNewMap(player) {
