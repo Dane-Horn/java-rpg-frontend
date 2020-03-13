@@ -34,7 +34,7 @@
                 <router-link class="link" style="font-size: 12px" to="/forgotpassword">Forgot Password?</router-link>
                 <br/>
                 <v-btn 
-                color="error"
+                color="secondary"
                 class="mr-4 nes-btn"
                 :disabled="!isValid" 
                 @click="login()"

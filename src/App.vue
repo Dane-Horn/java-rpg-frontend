@@ -19,10 +19,9 @@
                   <router-link to="/" class="nav-link">Home</router-link> 
                     <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
                 </li>
-                <li class="nav-item">
-                    <!-- <a class="nav-link" href="#">Link</a> -->
+                <!-- <li class="nav-item">
                     <router-link to="/profile" class="nav-link">Profile</router-link> 
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
                     <router-link to="/maze" class="nav-link" >Maze</router-link> 
@@ -178,6 +177,10 @@
   // .application {
   //   font-family: 'Press Start 2P', cursive;
   // }
+  #app{
+    margin-top: 0px!important;
+  }
+
   html, body, pre, p, code, kbd, samp {
     font-family: $body-font-family, cursive !important;
   }

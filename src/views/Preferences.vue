@@ -42,7 +42,7 @@
         <div style="float: right; margin-top: 20px">
         <br/>
         <v-btn 
-            color="error"
+            color="secondary"
             class="mr-4 nes-btn"
             :disabled="!isValid" 
             @click="preferences()"

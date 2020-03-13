@@ -19,7 +19,7 @@
         <br/>
         <!-- <v-btn :disabled="!isValid" @click="forgotPassword()">Send Email</v-btn> -->
         <v-btn 
-            color="error"
+            color="secondary"
             class="mr-4 nes-btn"
             :disabled="!isValid" 
             @click="forgotPassword()"

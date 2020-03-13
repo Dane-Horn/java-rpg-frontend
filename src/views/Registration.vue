@@ -46,7 +46,7 @@
         <router-link class="link" style="font-size: 12px" to="/login">Already Registered?</router-link>
         <br/>
         <v-btn 
-            color="error"
+            color="secondary"
             class="mr-4 nes-btn"
             :disabled="!isValid" 
             @click="register()"
